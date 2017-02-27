@@ -79,9 +79,13 @@ hog_channel = 'ALL' # Can be 0, 1, 2, or "ALL"
 ####SVM Classifier
 
 Next step is to train a classifier to detect cars and not cars images (`train_classifier` function from `vehicle_detection.py` file).
+
 For this I used `sklearn.svm` to train a SVM classifier using `LinearSVC` function.
+
 The data set used for training contains labeled images with two categories, cars and not cars.
+
 After extracting HOG features and normalize them using `StandardScaler` we end up with a feature vector with length 840 for each image in our data set.
+
 
 Here is the output for applying SVM classfier on our training set:
 
@@ -99,8 +103,11 @@ Test Accuracy of SVC =  0.9879
 In this step we need to compute the HOG on the whole image and slide windows in features.
 
 To do this I used the method presented in `Hog Sub-sampling Window Search` lesson which allows us to only extract hog features once and then to sub-sampled to get all of its overlaying windows (code is available under `find_cars` function from `vehicle_detection.py` file).
+
 Each window is defined by a scaling factor where a scale of 1 would result in a window that's 8 x 8 cells then the overlap of each window is in terms of the cell distance.
+
 In my final solution I used 1.5 as scale factor which match 96x96 window sizes.
+
 
 All final parameters used are:
 ```
@@ -122,8 +129,11 @@ Ultimately appling the above pipeline using YCrCb 3-channel HOG features plus sp
 ###Thresholding and False Positives
 
 The next step is to remove the false positive and combine the overlaping detection.
+
 In order to do this I recorder the positions of positive detection in each frame and  I created a heat map (`add_heat` function from `vehicle_detection.py` file) and apply a threshold (`apply_threshold` function from `vehicle_detection.py` file) to it to allow output where there has been an overap of at least 2.
+
 I then used scipy.ndimage.measurements.label() to identify individual blobs in the heatmap. I then assumed each blob corresponded to a vehicle. I constructed bounding boxes to cover the area of each blob detected.
+
 
 Here's an example result showing the heatmap applied to the test images:
 
@@ -135,6 +145,7 @@ Here's an example result showing the heatmap applied to the test images:
 ![alt text][image13]
 
 Applying only on one frame at a time is good but not really helpfull the best results are optained when we apply this technique on multiple consecutive frames.
+
 For example, this is the result optained after applying this technique on the integrated heatmap from the last 6 frames:
 
 ![alt text][image14]
