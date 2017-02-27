@@ -31,7 +31,7 @@ The goals / steps of this project are the following:
 
 [image14]: ./output_images/test_combined_heatmap.png "Test Combined Heat Map"
 
-[video1]: ./output_images/project_video_result.gif "Video Result"
+[video1]: ./output_videos/project_video.gif "Video Result"
 
 ---
 ###Files
@@ -96,9 +96,13 @@ Test Accuracy of SVC =  0.9879
 ---
 ###Sliding Window Search
 
-For this step I used the method presented in `Hog Sub-sampling Window Search` lesson which allows us to only extract hog features once and then to sub-sampled to get all of its overlaying windows (code is available under `find_cars` function from `vehicle_detection.py` file).
+In this step we need to compute the HOG on the whole image and slide windows in features.
+
+To do this I used the method presented in `Hog Sub-sampling Window Search` lesson which allows us to only extract hog features once and then to sub-sampled to get all of its overlaying windows (code is available under `find_cars` function from `vehicle_detection.py` file).
 Each window is defined by a scaling factor where a scale of 1 would result in a window that's 8 x 8 cells then the overlap of each window is in terms of the cell distance.
-The final parameters used are:
+In my final solution I used 1.5 as scale factor which match 96x96 window sizes.
+
+All final parameters used are:
 ```
 ystart = image.shape[0] / 2
 ystop = image.shape[0]
@@ -142,7 +146,7 @@ And this is the final output using the above pipeline applied on `project_video.
 
 ![alt text][video1]
 
-Here's a [link to my video result](./output_videos/project_video_result.mp4) (mp4).
+Here's a [link to my video result](./output_videos/project_video.mp4) (mp4).
 
 ---
 ###Discussion
@@ -153,6 +157,6 @@ My approch was to apply all the techniques discussed in the lessons, with small 
 
 The final pipeline is doing a fair job on the project video but there are a lot to improve.
 
-There are places where the car is not detected and also at some point the pipeline fails to detect multiple cars when there is some overlapping.
+There are places where the car is not detected and also at some point the pipeline fails to detect multiple cars when there is some overlapping. Also multiple scale factors could be used in sliding window search step.
 
 I would also like to try to implement this using deep learning classifier to be able to compare the results.
